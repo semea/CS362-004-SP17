@@ -1281,7 +1281,7 @@ int playAdventurer(struct gameState *state, int drawntreasure, int temphand[], i
 			drawntreasure++;
 		else {
 			temphand[z] = cardDrawn;
-			state->handCount[state->whoseTurn]--; //this should just remove the top card (the most recently drawn one).
+			state->handCount[state->whoseTurn+1]--; //this should just remove the top card (the most recently drawn one).
 			z++;
 		}
 	}
@@ -1338,7 +1338,7 @@ int playConcilRoom(struct gameState *state, int handPos) {
 	}
 
 	//+1 Buy
-	state->numBuys;//++
+	state->numBuys++;
 
 	//Each other player draws a card
 	for (int i = 0; i < state->numPlayers; i++)
