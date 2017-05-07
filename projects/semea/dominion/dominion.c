@@ -34,8 +34,7 @@ int* kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7,
   return k;
 }
 
-int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
-		   struct gameState *state) {
+int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state) {
 
   int i;
   int j;
@@ -65,37 +64,38 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
         }
     }
 
+#pragma region "Initialize Supply"
 
   //initialize supply
   ///////////////////////////////
 
   //set number of Curse cards
   if (numPlayers == 2)
-    {
-      state->supplyCount[curse] = 10;
-    }
+  {
+	  state->supplyCount[curse] = 10;
+  }
   else if (numPlayers == 3)
-    {
-      state->supplyCount[curse] = 20;
-    }
+  {
+	  state->supplyCount[curse] = 20;
+  }
   else
-    {
-      state->supplyCount[curse] = 30;
-    }
+  {
+	  state->supplyCount[curse] = 30;
+  }
 
   //set number of Victory cards
   if (numPlayers == 2)
-    {
-      state->supplyCount[estate] = 8;
-      state->supplyCount[duchy] = 8;
-      state->supplyCount[province] = 8;
-    }
+  {
+	  state->supplyCount[estate] = 8;
+	  state->supplyCount[duchy] = 8;
+	  state->supplyCount[province] = 8;
+  }
   else
-    {
-      state->supplyCount[estate] = 12;
-      state->supplyCount[duchy] = 12;
-      state->supplyCount[province] = 12;
-    }
+  {
+	  state->supplyCount[estate] = 12;
+	  state->supplyCount[duchy] = 12;
+	  state->supplyCount[province] = 12;
+  }
 
   //set number of Treasure cards
   state->supplyCount[copper] = 60 - (7 * numPlayers);
@@ -104,35 +104,36 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
 
   //set number of Kingdom cards
   for (i = adventurer; i <= treasure_map; i++)       	//loop all cards
-    {
-      for (j = 0; j < 10; j++)           		//loop chosen cards
-	{
-	  if (kingdomCards[j] == i)
-	    {
-	      //check if card is a 'Victory' Kingdom card
-	      if (kingdomCards[j] == great_hall || kingdomCards[j] == gardens)
-		{
-		  if (numPlayers == 2){ 
-		    state->supplyCount[i] = 8; 
+  {
+	  for (j = 0; j < 10; j++)           		//loop chosen cards
+	  {
+		  if (kingdomCards[j] == i)
+		  {
+			  //check if card is a 'Victory' Kingdom card
+			  if (kingdomCards[j] == great_hall || kingdomCards[j] == gardens)
+			  {
+				  if (numPlayers == 2) {
+					  state->supplyCount[i] = 8;
+				  }
+				  else { state->supplyCount[i] = 12; }
+			  }
+			  else
+			  {
+				  state->supplyCount[i] = 10;
+			  }
+			  break;
 		  }
-		  else{ state->supplyCount[i] = 12; }
-		}
-	      else
-		{
-		  state->supplyCount[i] = 10;
-		}
-	      break;
-	    }
-	  else    //card is not in the set choosen for the game
-	    {
-	      state->supplyCount[i] = -1;
-	    }
-	}
+		  else    //card is not in the set choosen for the game
+		  {
+			  state->supplyCount[i] = -1;
+		  }
+	  }
 
-    }
+  }
 
   ////////////////////////
   //supply intilization complete
+#pragma endregion
 
   //set player decks
   for (i = 0; i < numPlayers; i++)
